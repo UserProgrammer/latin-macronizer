@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     python-is-python3 \
     postgresql-client
+#    apache2
 
 COPY RFTagger.zip /
 RUN unzip RFTagger.zip && cd RFTagger/src && make && make install && cd /
@@ -24,6 +25,10 @@ COPY treebank_data/ /treebank_data
 
 WORKDIR /latin-macronizer
 RUN ./train-rftagger.sh
+
+#RUN a2enmod cgi 
+#COPY apache2.conf /etc/apache2/apache2.conf
+#RUN ln -s /latin-macronizer/macronize.py /var/www/html/macronize.py
 
 COPY ./entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

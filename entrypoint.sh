@@ -15,4 +15,6 @@ echo "Seeding the database..."
 python macronize.py --initialize
 echo "Finished seeding the database."
 
+#service apache2 restart
+
 sleep 10000
