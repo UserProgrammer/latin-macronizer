@@ -16,10 +16,13 @@ services:
       - "8181:80"
 
   postgres:
-    image: postgres:13.11-bullseye
-    environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+    build:
+      args:
+        - DB_PASSWORD=${DB_PASSWORD}
+        - DB_NAME=${DB_NAME}
+      context: .
+      dockerfile: postgres.Dockerfile
+    image: latin-macronizer-postgres
     networks:
       default:
         aliases:
