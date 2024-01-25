@@ -23,6 +23,8 @@ services:
       context: .
       dockerfile: postgres.Dockerfile
     image: latin-macronizer-postgres
+    ports:
+      - "5432:5432"
     networks:
       default:
         aliases:

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+psql --password --host localhost macronizer postgres
