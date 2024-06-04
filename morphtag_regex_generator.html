@@ -1,0 +1,137 @@
+<html>
+  <body>
+    <section>
+      <h1>Part of Speech</h1>
+
+      <div>
+        <button data-action="select" data-group="pos">Select all</button>
+        <button data-action="unselect" data-group="pos">Unselect all</button>
+      </div>
+
+      <label>
+        Noun:
+        <input id="noun" value="n" data-group="pos" type="checkbox"  />
+      </label>
+      <label>
+        Verb:
+        <input id="verb" data-group="pos" type="checkbox" value="v" />
+      </label>
+      <label>
+        Participle:
+        <input id="participle" data-group="pos" type="checkbox" value="p" />
+      </label>
+      <label>
+        Adjective:
+        <input id="adjective" data-group="pos" type="checkbox" value="a" />
+      </label>
+      <label>
+        Adverb:
+        <input id="adverb" data-group="pos" type="checkbox" value="d" />
+      </label>
+      <label>
+        Conjunction:
+        <input id="Conjunction" data-group="pos" type="checkbox" value="c" />
+      </label>
+      <label>
+        Preposition:
+        <input id="preposition" data-group="pos" type="checkbox" value="r" />
+      </label>
+      <label>
+        Pronoun:
+        <input id="pronoun" data-group="pos" type="checkbox" value="p" />
+      </label>
+      <label>
+        Numeral:
+        <input id="numeral" data-group="pos" type="checkbox" value="m" />
+      </label>
+      <label>
+        Interjection:
+        <input id="interjection" data-group="pos" type="checkbox" value="i" />
+      </label>
+      <label>
+        Exclamation:
+        <input id="exclamation" data-group="pos" type="checkbox" value="e" />
+      </label>
+      <label>
+        Punctuation:
+        <input id="punctuation" data-group="pos" type="checkbox" value="p" />
+      </label>
+    </section>
+
+    <section>
+      <h1>Person</h1>
+
+      <div>
+        <button data-action="select" data-group="per">Select all</button>
+        <button data-action="unselect" data-group="per">Unselect all</button>
+      </div>
+
+      <label>
+        First:
+        <input id="first" value="1" data-group="per" type="checkbox"  />
+      </label>
+      <label>
+        Second:
+        <input id="second" value="2" data-group="per" type="checkbox"  />
+      </label>
+      <label>
+        Third:
+        <input id="third" value="3" data-group="per" type="checkbox"  />
+      </label>
+      <label>
+    </section>
+
+    <section>
+      <h1>Number</h1>
+
+      <div>
+        <button data-action="select" data-group="num">Select all</button>
+        <button data-action="unselect" data-group="num">Unselect all</button>
+      </div>
+
+      <label>
+        Singular:
+        <input id="singular" value="s" data-group="num" type="checkbox"  />
+      </label>
+      <label>
+        Plural:
+        <input id="plural" value="p" data-group="num" type="checkbox"  />
+      </label>
+    </section>
+  </body>
+
+  <script>
+    function getInputsByGroup(group) {
+      return document.querySelectorAll(`input[data-group="${group}"]`);
+    }
+
+    function toggleCheckboxesForGroup(group, isChecked) {
+      const checkboxes = getInputsByGroup(group);
+
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = isChecked;
+      });
+    }
+
+    function selectInputsForGroupEventHandler(event) {
+      toggleCheckboxesForGroup(event.target.dataset.group, true)
+    }
+
+    function unselectInputsForGroupEventHandler(event) {
+      toggleCheckboxesForGroup(event.target.dataset.group, false)
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const selectAllButtons = document.querySelectorAll("button[data-action='select']");
+
+      selectAllButtons.forEach(button => {
+        button.addEventListener('click', selectInputsForGroupEventHandler);
+      });
+
+      const unselectAllButtons = document.querySelectorAll("button[data-action='unselect']");
+      unselectAllButtons.forEach(button => {
+        button.addEventListener('click', unselectInputsForGroupEventHandler);
+      });
+    });
+  </script>
+</html>

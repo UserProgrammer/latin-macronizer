@@ -25,5 +25,8 @@ COPY treebank_data/ /treebank_data
 WORKDIR /latin-macronizer
 RUN ./train-rftagger.sh
 
+ENV MORPHLIB /morpheus/stemlib
+ENV PATH $PATH:/morpheus/bin
+
 COPY ./entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

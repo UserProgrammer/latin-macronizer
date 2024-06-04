@@ -129,8 +129,8 @@ class Wordlist:
             if not self.loadwordfromdb(word):  # Could not find word in database
                 unseenwords.add(word)
         if len(unseenwords) > 0:
-            self.crunchwords(unseenwords)  # Try to parse unseen words with Morpheus, and add result to the database
-            for word in unseenwords:
+            unloaded_words = self.crunchwords(unseenwords)  # Try to parse unseen words with Morpheus, and add result to the database
+            for word in unloaded_words:
                 if not self.loadwordfromdb(word):
                     raise Exception("Could not store %s in the database." % word)
     # enddef
@@ -214,8 +214,11 @@ class Wordlist:
                 self.dbcursor.execute("INSERT INTO morpheus (wordform, morphtag, lemma, accented) VALUES (%s,%s,%s,%s)",
                                       (wordform, tag, lemma, accented))
         # The remaining were unknown to Morpheus:
-        for wordform in words - knownwords:
-            self.dbcursor.execute("INSERT INTO morpheus (wordform) VALUES (%s)", (wordform,))
+        unrecognized_words = words - knownwords
+        print("Morpheus did no recognize the following words: " + str(unrecognized_words))
+
+        #for wordform in words - knownwords:
+        #    self.dbcursor.execute("INSERT INTO morpheus (wordform) VALUES (%s)", (wordform,))
         # Remove duplicates:
         self.dbcursor.execute(
             "DELETE FROM morpheus USING morpheus m2 WHERE morpheus.wordform = m2.wordform AND "
@@ -224,6 +227,8 @@ class Wordlist:
             "(morpheus.accented = m2.accented OR morpheus.accented IS NULL AND m2.accented IS NULL) AND "
             "morpheus.id > m2.id")
         self.dbconn.commit()
+
+        return words - unrecognized_words
     # enddef
 # endclass
 
@@ -1037,6 +1042,7 @@ class Macronizer:
     # enddef
 
     def settext(self, text):
+        print("Running settext()")
         self.tokenization = Tokenization(text)
         self.wordlist.loadwords(self.tokenization.allwordforms())
         newwordforms = self.tokenization.splittokens(self.wordlist)
@@ -1051,6 +1057,7 @@ class Macronizer:
     # enddef
 
     def gettext(self, domacronize=True, alsomaius=False, performutov=False, performitoj=False, markambigs=False):
+        print("Running gettext()")
         self.tokenization.macronize(domacronize, alsomaius, performutov, performitoj)
         return self.tokenization.detokenize(markambigs)
     # enddef

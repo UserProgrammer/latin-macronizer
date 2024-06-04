@@ -53,16 +53,14 @@ parser.add_argument("--initialize", action="store_true", help="reset the databas
 parser.add_argument("--evaluate", action="store_true", help="test accuracy against input gold standard")
 args = parser.parse_args()
 
-# Note: The initialize command is no longer needed given that a pre-seeded postgres is provided as part of
-#       this repository.
-#if args.initialize:
-#    try:
-#        macronizer = Macronizer()
-#        macronizer.wordlist.reinitializedatabase()
-#    except Exception as inst:
-#        print(inst.args[0])
-#        exit(1)
-#    exit(0)
+if args.initialize:
+    try:
+        macronizer = Macronizer()
+        macronizer.wordlist.reinitializedatabase()
+    except Exception as inst:
+        print(inst.args[0])
+        exit(1)
+    exit(0)
 
 if args.listscans:
     for i, [description, _] in enumerate(SCANSIONS):

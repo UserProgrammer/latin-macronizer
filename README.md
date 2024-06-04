@@ -151,6 +151,6 @@ This query will search for a noun in the plural, masculine, nominative form.
 - `\l` will list the available databases
 - `\c <database name>` will connect to a specific database, afterwhich SQL commands will be executed
   against it
-- `dt` will list out the tables belonging to the currently-selected database
+- `\dt` will list out the tables belonging to the currently-selected database
 
 For more information, go here: https://www.atlassian.com/data/admin/how-to-list-databases-and-tables-in-postgresql-using-psql
